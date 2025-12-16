@@ -1,10 +1,10 @@
-import { useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
-import { open, save } from "@tauri-apps/plugin-dialog"; // 👈 注意：这里用 open + 新增 directory 方法
+import { open } from "@tauri-apps/plugin-dialog";
+import { useState } from "react";
+import "./App.css";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
 import { Label } from "./components/ui/label";
-import "./App.css";
 
 function App() {
   const [filePath, setFilePath] = useState<string | null>(null);
