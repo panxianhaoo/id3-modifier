@@ -8,7 +8,7 @@ import { Label } from "./components/ui/label";
 
 function App() {
   const [filePath, setFilePath] = useState<string | null>(null);
-  const [exportDir, setExportDir] = useState<string | null>(null); // 新增：导出目录
+  const [exportDir, setExportDir] = useState<string | null>(null);
   const [artist, setArtist] = useState("");
   const [title, setTitle] = useState("");
   const [album, setAlbum] = useState("");
@@ -66,17 +66,16 @@ function App() {
     }
     setLoading(true);
     try {
-      const result = await invoke("update_id3_tag", {
-        filePath,
-        exportDir,
+      const result = await invoke("modify", {
+        filePath: filePath,
+        exportPath: exportDir,
         artist: artist.trim(),
         title: title.trim(),
         album: album.trim(),
       });
-      console.log("Success:", result);
+      console.log(result);
       setSubmitted(true);
     } catch (err: any) {
-      console.error("调用失败", err);
       setError(err?.message || err?.toString() || "操作失败");
     } finally {
       setLoading(false);
@@ -85,7 +84,6 @@ function App() {
 
   const handleReset = () => {
     setFilePath(null);
-    setExportDir(null);
     setArtist("");
     setTitle("");
     setAlbum("");
@@ -97,7 +95,9 @@ function App() {
     <main className="min-h-screen bg-gray-50 flex items-center justify-center p-4 sm:p-6">
       <div className="w-full max-w-2xl bg-white shadow-md rounded-lg p-5 sm:p-6">
         <header className="mb-5">
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-800">ID3 标签修改器</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
+            ID3 标签修改器
+          </h1>
           <p className="text-sm text-gray-500 mt-1">
             修改 MP3 元数据，可选择另存到指定目录
           </p>
